@@ -1,4 +1,4 @@
-import *  as actionTypes from '../actionTypes'
+import *  as actionTypes from './actionTypes'
 
 export const increment=()=>{
     return{
@@ -29,9 +29,22 @@ export const sub=(value)=>{
 
 }
 
-export const restore=(counter)=>{
+
+const res=(counter)=>{
     return{
-       type:actionTypes.RESTORE,counter:counter
+                   type:actionTypes.RESTORE,counter:counter
+                }
+}
+export const restore=(counter)=>{
+
+    return (dispatch,getState)=>{
+        setTimeout(()=> {
+            console.log(getState().counter)
+            dispatch(res(counter))
+            }
+
+
+        ,2000)
     }
 
 }
@@ -43,3 +56,5 @@ export const remove=(index)=>{
     }
 
 }
+
+

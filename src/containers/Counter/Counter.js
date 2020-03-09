@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import * as actionTypes from '../../store/actionTypes'
+import * as actionTypes from '../../store/actions/actionTypes'
 import CounterControl from '../../components/CounterControl/CounterControl';
 import CounterOutput from '../../components/CounterOutput/CounterOutput';
 import {connect} from 'react-redux'
 import  * as  actionCreators from "../../store/actions/actions";
-
+import  * as  counterActionCreators from "../../store/actions/counter";
+import  * as  resultsActionCreators from "../../store/actions/results";
 class Counter extends Component {
     state = {
         counter: 0
@@ -60,12 +61,12 @@ const mapStateToProps=(state)=>{
 
 const mapDispatchToProps=(dispatch)=>{
     return{
-        onIncrement: () => dispatch(actionCreators.increment()),
-        onDecrement:() => dispatch(actionCreators.decrement()),
-        ADDFive:() => dispatch(actionCreators.add(5)),
-        SUBFive:() => dispatch(actionCreators.sub(5)),
+        onIncrement: () => dispatch(counterActionCreators.increment()),
+        onDecrement:() => dispatch(counterActionCreators.decrement()),
+        ADDFive:() => dispatch(counterActionCreators.add(5)),
+        SUBFive:() => dispatch(counterActionCreators.sub(5)),
         RESTORE:(counter)=> dispatch(actionCreators.restore(counter)),
-        REMOVE: (index) => dispatch(actionCreators.remove(index))
+        REMOVE: (index) => dispatch(resultsActionCreators.remove(index))
     };
 }
 export default connect(mapStateToProps,mapDispatchToProps)(Counter);
