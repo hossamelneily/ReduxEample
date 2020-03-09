@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
-import {createStore,combineReducers} from "redux";
+import {createStore,combineReducers , applyMiddleware, compose} from "redux";
 import reducer from "./store/reducer";
 import {Provider} from 'react-redux'
 import resultsReducer from './store/reducers/results'
@@ -14,7 +14,19 @@ const RootReducers = combineReducers({
     counter:counterReducer,
     results:resultsReducer
 })
-const Store = createStore(RootReducers)
+
+const logger=(store)=>{ // Middleware
+    return next => {
+        return action => {
+            console.log('[MiddleWare] dispatching',action)
+            const result = next(action)
+            console.log(('[MiddleWare] next state ',store.getState()))
+            return result
+        }
+    }
+}
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const Store = createStore(RootReducers,composeEnhancers(applyMiddleware(logger)))
 // const Store = createStore(reducer)
 
 ReactDOM.render(
